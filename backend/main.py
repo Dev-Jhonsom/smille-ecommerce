@@ -16,6 +16,8 @@ app.add_middleware(
         "http://localhost:5174",
         "http://localhost:4173",
         "https://*.vercel.app",
+        "https://*.railway.app",
+        "https://smille-ecommerce.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
