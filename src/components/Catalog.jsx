@@ -1,9 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import ProductCard from './ProductCard';
-import { SlidersHorizontal, RotateCcw } from 'lucide-react';
+import { RotateCcw, Loader, AlertTriangle } from 'lucide-react';
 
 export default function Catalog({ 
   products, 
+  loading = false,
+  apiError = false,
   activeTab, 
   setActiveTab,
   selectedCategory,
@@ -182,9 +184,20 @@ export default function Catalog({
 
           {/* Grid panel */}
           <main>
-            {filteredProducts.length > 0 ? (
+            {loading ? (
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '300px', color: 'var(--text-muted)', gap: '0.75rem' }}>
+                <Loader size={22} style={{ animation: 'spin 1s linear infinite' }} />
+                <span>Carregando looks...</span>
+              </div>
+            ) : apiError ? (
+              <div className="glass" style={{ padding: '4rem 2rem', textAlign: 'center', borderRadius: '8px', color: 'var(--text-muted)' }}>
+                <AlertTriangle size={40} style={{ color: 'var(--accent-pink)', marginBottom: '1rem' }} />
+                <p style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>Não foi possível conectar ao servidor.</p>
+                <p style={{ fontSize: '0.85rem' }}>Verifique se o backend Python está rodando em localhost:8000.</p>
+              </div>
+            ) : products.length > 0 ? (
               <div className="products-grid">
-                {filteredProducts.map((product) => (
+                {products.map((product) => (
                   <ProductCard 
                     key={product.id}
                     product={product}
@@ -195,9 +208,9 @@ export default function Catalog({
               </div>
             ) : (
               <div className="glass" style={{ padding: '4rem 2rem', textAlign: 'center', borderRadius: '8px', color: 'var(--text-muted)' }}>
-                <p style={{ fontSize: '1.2rem', marginBottom: '1.5rem' }}>Nenhum look ciber-rave foi encontrado com os filtros atuais.</p>
+                <p style={{ fontSize: '1.2rem', marginBottom: '1.5rem' }}>Nenhum look encontrado com os filtros atuais.</p>
                 <button className="btn btn-primary" onClick={resetFilters}>
-                  Resetar Filtros
+                  Limpar Filtros
                 </button>
               </div>
             )}
