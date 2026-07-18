@@ -153,7 +153,7 @@ export default function Catalog({
               <div className="glass" style={{ padding: '4rem 2rem', textAlign: 'center', borderRadius: '8px', color: 'var(--text-muted)' }}>
                 <AlertTriangle size={40} style={{ color: 'var(--accent-pink)', marginBottom: '1rem' }} />
                 <p style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>Não foi possível conectar ao servidor.</p>
-                <p style={{ fontSize: '0.85rem' }}>Verifique se o backend Python está rodando em localhost:8000.</p>
+                <p style={{ fontSize: '0.85rem' }}>Verifique sua conexão com a internet. API: smille-ecommerce-production.up.railway.app</p>
               </div>
             ) : products.length > 0 ? (
               <div className="products-grid">

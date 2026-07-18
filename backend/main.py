@@ -18,6 +18,7 @@ app.add_middleware(
         "https://*.vercel.app",
         "https://*.railway.app",
         "https://smille-ecommerce.vercel.app",
+        "https://smille-ecommerce-production.up.railway.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
