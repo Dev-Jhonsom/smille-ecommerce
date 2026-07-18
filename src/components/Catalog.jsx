@@ -28,53 +28,13 @@ export default function Catalog({
     setSortBy('featured');
   };
 
-  // Filtered and Sorted products
-  const filteredProducts = useMemo(() => {
-    return products
-      .filter((product) => {
-        // Filter by Department (Masculino, Feminino, Unissex)
-        if (activeTab !== 'todos') {
-          if (product.department !== activeTab && product.department !== 'unissex') {
-            return false;
-          }
-        }
-
-        // Filter by Category
-        if (selectedCategory !== 'todos' && product.category !== selectedCategory) {
-          return false;
-        }
-
-        // Filter by Price Range
-        if (product.price > priceRange) {
-          return false;
-        }
-
-        // Filter by Search Query
-        if (searchQuery.trim() !== '') {
-          const query = searchQuery.toLowerCase();
-          const matchesName = product.name.toLowerCase().includes(query);
-          const matchesDesc = product.description.toLowerCase().includes(query);
-          const matchesCat = product.category.toLowerCase().includes(query);
-          if (!matchesName && !matchesDesc && !matchesCat) {
-            return false;
-          }
-        }
-
-        return true;
-      })
-      .sort((a, b) => {
-        if (sortBy === 'price-low') {
-          return a.price - b.price;
-        }
-        if (sortBy === 'price-high') {
-          return b.price - a.price;
-        }
-        if (sortBy === 'rating') {
-          return b.rating - a.rating;
-        }
-        return 0;
-      });
-  }, [products, activeTab, selectedCategory, priceRange, searchQuery, sortBy]);
+  // Ordenacao local dos produtos recebidos da API
+  const filteredProducts = [...products].sort((a, b) => {
+    if (sortBy === 'price-low')  return a.price - b.price;
+    if (sortBy === 'price-high') return b.price - a.price;
+    if (sortBy === 'rating')     return b.rating - a.rating;
+    return 0;
+  });
 
   return (
     <section className="catalog-section" id="catalog-section">

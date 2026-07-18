@@ -1,6 +1,12 @@
+# -*- coding: utf-8 -*-
+import sys
+import io
+# Força saída UTF-8 no terminal Windows
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
 """
 Smille - Script de Seed
-Popula a tabela 'products' no Supabase com os 10 produtos da coleção festival.
+Popula a tabela 'products' no Supabase com os 10 produtos da colecao festival.
 Execute: python seed.py
 """
 import json
@@ -147,18 +153,18 @@ products = [
 
 
 def run_seed():
-    print("🌱 Iniciando seed da Smille Store...")
+    print("[SEED] Iniciando seed da Smille Store...")
 
     # Limpa tabela antes de inserir (evita duplicatas)
     supabase.table("products").delete().neq("id", 0).execute()
-    print("🗑️  Tabela limpa.")
+    print("[SEED] Tabela limpa com sucesso.")
 
     response = supabase.table("products").insert(products).execute()
 
     if response.data:
-        print(f"✅ {len(response.data)} produtos inseridos com sucesso!")
+        print(f"[SEED] {len(response.data)} produtos inseridos com sucesso!")
     else:
-        print("❌ Erro ao inserir produtos:", response)
+        print("[SEED] Erro ao inserir produtos:", response)
 
 
 if __name__ == "__main__":
